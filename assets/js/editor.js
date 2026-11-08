@@ -83,10 +83,13 @@
      const small=el.querySelector('small,.eyebrow,.eyeline,.subtitle');
      const cta=el.querySelector('a[href],button');
      const inline=el.getAttribute('style')||'';
-     const bg=inline.match(new RegExp('background(?:-color)?\\\\s*:\\\\s*(#[0-9a-f]{3,8})','i'));
-     const fg=inline.match(new RegExp('(?:^|;)\\\\s*color\\\\s*:\\\\s*(#[0-9a-f]{3,8})','i'));
+     const styleMap=Object.fromEntries(inline.split(';').map(rule=>{const at=rule.indexOf(':');return at<0?['','']:[rule.slice(0,at).trim().toLowerCase(),rule.slice(at+1).trim()];}));
+     const bgValue=styleMap['background-color']||styleMap.background||'';
+     const fgValue=styleMap.color||'';
+     const bg=bgValue.startsWith('#')&&[4,7,9].includes(bgValue.length)?bgValue:null;
+     const fg=fgValue.startsWith('#')&&[4,7,9].includes(fgValue.length)?fgValue:null;
      const images=[...el.querySelectorAll('img[src]')].slice(0,6).map(img=>({src:img.getAttribute('src'),alt:img.getAttribute('alt')||''})).filter(img=>img.src&&(img.src.startsWith('https://')||img.src.startsWith('http://')));
-     return {id:crypto.randomUUID(),type,...defaults[type],eyebrow:small?small.innerText.trim().slice(0,80):'',title:heading?heading.innerText.trim().slice(0,180):(el.querySelector('strong')?.innerText.trim().slice(0,180)||('Uvezeni sadržaj '+(index+1))),text:paragraphs.join('\\n\\n').slice(0,700),button:cta?cta.innerText.trim().slice(0,50):'',buttonUrl:cta?safeUrl(cta.getAttribute('href')||''):'',bg:bg?bg[1]:defaults[type].bg,fg:fg?fg[1]:defaults[type].fg,images,imageAlt:images[0]?.alt||''};
+     return {id:crypto.randomUUID(),type,...defaults[type],eyebrow:small?small.innerText.trim().slice(0,80):'',title:heading?heading.innerText.trim().slice(0,180):(el.querySelector('strong')?.innerText.trim().slice(0,180)||('Uvezeni sadržaj '+(index+1))),text:paragraphs.join('\\n\\n').slice(0,700),button:cta?cta.innerText.trim().slice(0,50):'',buttonUrl:cta?safeUrl(cta.getAttribute('href')||''):'',bg:bg||defaults[type].bg,fg:fg||defaults[type].fg,images,imageAlt:images[0]?.alt||''};
     });
     if(!imported.length){notify('U HTML datoteci nisu pronađene čitljive sekcije.');return;}
     if(!confirm('Uvesti '+imported.length+' sekcija iz '+file.name+'? Postojeće sekcije ovog projekta bit će zamijenjene.'))return;
