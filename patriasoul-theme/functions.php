@@ -24,18 +24,42 @@ function patriasoul_setup() {
 }
 add_action( 'after_setup_theme', 'patriasoul_setup' );
 
+/** Resolve category links using the site's actual WordPress permalink settings. */
+function patriasoul_category_url( $slug ) {
+    $category = get_category_by_slug( $slug );
+    return $category ? get_category_link( $category->term_id ) : add_query_arg( 'category_name', $slug, home_url( '/' ) );
+}
+
+/** Create the portal's basic editorial categories when the theme is activated. */
+function patriasoul_create_default_categories() {
+    $categories = array(
+        'domovina' => 'Domovina',
+        'hrvatska-pamti' => 'Hrvatska pamti',
+        'vjera-i-obitelj' => 'Vjera i obitelj',
+        'kultura-i-znanje' => 'Kultura i znanje',
+        'mediji' => 'Mediji',
+        'na-danasnji-dan' => 'Na današnji dan',
+    );
+    foreach ( $categories as $slug => $name ) {
+        if ( ! get_category_by_slug( $slug ) ) {
+            wp_insert_term( $name, 'category', array( 'slug' => $slug ) );
+        }
+    }
+}
+add_action( 'after_switch_theme', 'patriasoul_create_default_categories' );
+
 /** Keep the portal navigable before an administrator assigns a custom menu. */
 function patriasoul_menu_fallback() {
     $items = array(
-        'Domovina' => '/kategorija/domovina/',
-        'Hrvatska pamti' => '/kategorija/hrvatska-pamti/',
-        'Vjera i obitelj' => '/kategorija/vjera-i-obitelj/',
-        'Kultura i znanje' => '/kategorija/kultura-i-znanje/',
-        'Mediji' => '/kategorija/mediji/',
+        'Domovina' => patriasoul_category_url( 'domovina' ),
+        'Hrvatska pamti' => patriasoul_category_url( 'hrvatska-pamti' ),
+        'Vjera i obitelj' => patriasoul_category_url( 'vjera-i-obitelj' ),
+        'Kultura i znanje' => patriasoul_category_url( 'kultura-i-znanje' ),
+        'Mediji' => patriasoul_category_url( 'mediji' ),
     );
     echo '<ul class="menu-fallback">';
     foreach ( $items as $label => $path ) {
-        printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( $path ) ), esc_html( $label ) );
+        printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( $path ), esc_html( $label ) );
     }
     echo '</ul>';
 }
