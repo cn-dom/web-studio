@@ -17,5 +17,5 @@
   <nav class="main-nav" id="primary-navigation" aria-label="<?php esc_attr_e( 'Glavni izbornik', 'patriasoul' ); ?>">
     <?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => false, 'fallback_cb' => 'patriasoul_menu_fallback', 'items_wrap' => '<ul>%3$s</ul>' ) ); ?>
   </nav>
-  <a class="header-cta" href="<?php echo esc_url( home_url( '/kategorija/domovina/' ) ); ?>"><?php esc_html_e( 'Istraži priče', 'patriasoul' ); ?><span aria-hidden="true">↗</span></a>
+  <a class="header-cta" href="<?php echo esc_url( patriasoul_category_url( 'domovina' ) ); ?>"><?php esc_html_e( 'Istraži priče', 'patriasoul' ); ?><span aria-hidden="true">↗</span></a>
 </header>
