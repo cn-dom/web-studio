@@ -26,3 +26,6 @@ All layouts use native WordPress blocks and can be edited in Gutenberg.
 
 ## License
 Original Web Studio code: GPL-2.0-or-later. Blocksy and Blocksy Companion are separate products; install them from their official WordPress.org listings and follow their own licensing. No third-party assets are bundled.
+
+## ZIP paket
+Nakon spajanja promjena na main, GitHub Actions automatski izrađuje ZIP datoteku child teme. Otvori Actions → Package WordPress starter themes → zadnje uspješno pokretanje → Artifacts i preuzmi web-studio-blocksy-starter. ZIP zatim možeš instalirati u WordPressu kroz Izgled → Teme → Dodaj novu → Prenesi temu.
