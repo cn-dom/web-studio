@@ -12,8 +12,7 @@
 <header class="site-header">
   <a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'PatriaSoul – naslovnica', 'patriasoul' ); ?>">
     <?php if ( has_custom_logo() ) : ?><span class="brand-image"><?php the_custom_logo(); ?></span><?php else : ?>
-      <span class="brand-mark" aria-hidden="true"><span class="brand-mark-inner">P</span><i>✦</i></span>
-      <span class="brand-wordmark"><b>PATRIA<span>SOUL</span></b><small>ČUVARI NASLJEĐA</small></span>
+      <img class="brand-default-logo" src="https://raw.githubusercontent.com/cn-dom/cuvari-nasljeda/main/public/assets/images/1000000982.png" alt="PatriaSoul – Čuvari nasljeđa" width="56" height="56" loading="eager">
     <?php endif; ?>
   </a>
   <button class="menu-toggle" type="button" aria-label="<?php esc_attr_e( 'Otvori izbornik', 'patriasoul' ); ?>" aria-expanded="false" aria-controls="primary-navigation"><span></span><span></span><span></span></button>
