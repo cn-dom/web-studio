@@ -1,12 +1,21 @@
 <!doctype html>
 <html <?php language_attributes(); ?>>
-<head><meta charset="<?php bloginfo( 'charset' ); ?>"><meta name="viewport" content="width=device-width, initial-scale=1"><?php wp_head(); ?></head>
-<body <?php body_class(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php wp_head(); ?>
+</head>
+<body <?php body_class( 'patriasoul-site' ); ?>>
 <?php wp_body_open(); ?>
-<div class="topline"><span><?php esc_html_e( 'HRVATSKA · POVIJEST · ZNANJE · IDENTITET', 'patriasoul' ); ?></span><span><?php esc_html_e( 'ČUVAJMO PRIČE KOJE NAS OBLIKUJU', 'patriasoul' ); ?></span></div>
+<a class="skip-link" href="#main-content"><?php esc_html_e( 'Preskoči na sadržaj', 'patriasoul' ); ?></a>
+<div class="topline"><span>HRVATSKA · POVIJEST · ZNANJE · IDENTITET</span><span>UPOZNAJ HRVATSKU. ČUVAJ BAŠTINU. PRENESI PRIČU.</span></div>
 <header class="site-header">
-<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"><span class="brand-mark">P<span>✦</span></span><span><b>PATRIA<span>SOUL</span></b><small>ČUVARI NASLJEĐA</small></span></a>
-<button class="menu-toggle" aria-label="<?php esc_attr_e( 'Otvori izbornik', 'patriasoul' ); ?>" aria-expanded="false">☰</button>
-<nav class="main-nav" aria-label="<?php esc_attr_e( 'Glavni izbornik', 'patriasoul' ); ?>"><?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => false, 'fallback_cb' => false, 'items_wrap' => '%3$s' ) ); ?></nav>
-<a class="header-cta" href="<?php echo esc_url( home_url( '/kategorija/domovina/' ) ); ?>"><?php esc_html_e( 'Istraži priče', 'patriasoul' ); ?> <span>↗</span></a>
+  <?php if ( has_custom_logo() ) : ?><div class="brand brand-custom"><?php the_custom_logo(); ?></div><?php else : ?>
+  <a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'PatriaSoul – naslovnica', 'patriasoul' ); ?>"><img class="brand-default-logo" src="https://raw.githubusercontent.com/cn-dom/cuvari-nasljeda/main/public/assets/images/1000000982.png" alt="PatriaSoul – Čuvari nasljeđa" width="56" height="56" loading="eager"></a>
+  <?php endif; ?>
+  <button class="menu-toggle" type="button" aria-label="<?php esc_attr_e( 'Otvori izbornik', 'patriasoul' ); ?>" aria-expanded="false" aria-controls="primary-navigation"><span></span><span></span><span></span></button>
+  <nav class="main-nav" id="primary-navigation" aria-label="<?php esc_attr_e( 'Glavni izbornik', 'patriasoul' ); ?>">
+    <?php wp_nav_menu( array( 'theme_location' => 'primary', 'container' => false, 'fallback_cb' => 'patriasoul_menu_fallback', 'items_wrap' => '<ul>%3$s</ul>' ) ); ?>
+  </nav>
+  <a class="header-cta" href="<?php echo esc_url( patriasoul_category_url( 'domovina' ) ); ?>"><?php esc_html_e( 'Istraži priče', 'patriasoul' ); ?><span aria-hidden="true">↗</span></a>
 </header>
