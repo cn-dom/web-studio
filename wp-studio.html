@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1020">
+<meta name="description" content="Izrada i uređivanje WordPress stranica unutar Web Studija.">
+<title>WordPress Studio — Web Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/wp-studio.css">
+<script src="assets/js/wp-studio.js" defer></script>
+</head>
+<body class="studio-page">
+<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark"><span></span><span></span><span></span></span><span>web<span class="brand-light">studio</span><small>WORDPRESS WORKSPACE</small></span></a>
+<nav class="main-nav"><a href="index.html">Početna</a><a href="wordpress.html">Biblioteka</a><a class="active" href="wp-studio.html">WordPress Studio</a><a href="workspace.html">Projekti</a></nav><a class="nav-cta" href="wordpress.html">Teme i predlošci ↗</a></header>
+<main class="studio-main">
+<section class="studio-heading"><div><div class="eyebrow"><span class="status-dot"></span> WORDPRESS · IZRADA U WEB STUDIJU</div><h1>Izradi svoju <span>WordPress stranicu.</span></h1><p>Pokreni pravu WordPress instalaciju izravno u ovom radnom prostoru. Odaberi početni paket, uređuj stranicu u WordPressu i pregledavaj promjene bez napuštanja Web Studija.</p></div><div class="studio-status"><i id="runtime-dot"></i><span id="runtime-status">WordPress okruženje nije pokrenuto</span></div></section>
+<section class="studio-launch">
+<div class="launch-panel"><div class="panel-kicker">01 / NOVI WORDPRESS PROJEKT</div><h2>Odaberi početni dizajn</h2><p>Svaki paket postavlja besplatnu Blocksy temu, našu child temu i osnovne stranice na hrvatskom jeziku.</p>
+<label for="blueprint-choice">Vrsta web stranice</label><select id="blueprint-choice"><option value="business">Poslovna web stranica</option><option value="stone">Kamenoklesarstvo</option><option value="apartments">Apartmani i turizam</option><option value="blank">Prazna WordPress instalacija</option></select>
+<div class="launch-info"><span>✓ WordPress + PHP u pregledniku</span><span>✓ Hrvatski jezik</span><span>✓ Uređivanje kroz WordPress</span></div>
+<button class="button button-primary launch-button" id="start-wordpress">＋ Pokreni WordPress projekt</button>
+<p class="launch-hint">Prvo pokretanje može potrajati jer se WordPress i odabrana tema učitavaju u preglednik.</p></div>
+<div class="launch-side"><div class="side-icon">W</div><b>Stvarni WordPress. Ne maketa.</b><p>Ugrađeno okruženje pokreće PHP i WordPress u pregledniku. Možeš koristiti WordPress nadzornu ploču, uređivati stranice i vidjeti stvarni rezultat.</p><div class="side-chips"><span>Gutenberg</span><span>Blocksy</span><span>WooCommerce*</span></div><small>* WooCommerce i drugi dodaci dodaju se u sljedećim koracima.</small></div>
+</section>
+<section class="workspace" id="wordpress-workspace" hidden>
+<div class="workspace-toolbar"><div><span class="live-indicator"></span><b id="site-name">Moj WordPress projekt</b><small id="site-mode">RADNO OKRUŽENJE</small></div>
+<div class="toolbar-actions"><button type="button" data-go="/" class="view-tab active">Pregled stranice</button><button type="button" data-go="/wp-admin/" class="view-tab">Uređivanje / Admin</button><button type="button" id="restart-wordpress" class="toolbar-button">Novi projekt ↻</button></div></div>
+<div class="workspace-frame"><div class="frame-loading" id="frame-loading"><span class="loader"></span><b>Pokrećemo WordPress…</b><small>Preuzimamo WordPress, temu i početni sadržaj.</small></div><iframe id="wordpress-frame" title="Ugrađeni WordPress radni prostor" allow="clipboard-read; clipboard-write; fullscreen" loading="eager"></iframe></div>
+<div class="workspace-foot"><span>Promjene se rade u ugrađenom WordPressu.</span><span>Ovaj je radni prostor zasad privremen. Spremanje projekta, sigurnosna kopija i izvoz još nisu uključeni.</span></div>
+</section>
+<section class="studio-notes"><article><b>Što je uključeno?</b><p>WordPress se izvršava u pregledniku pomoću WordPress Playground tehnologije. Ne trebaš instalirati PHP, bazu podataka ili WordPress Studio.</p></article><article><b>Važno za projekte klijenata</b><p>Ovo je radno i probno okruženje. Za javnu objavu, vlastitu domenu, trajnu pohranu i pouzdan rad treba kasnije izvesti stranicu na pravi WordPress hosting.</p></article></section>
+</main>
+<footer class="footer"><a class="brand footer-brand" href="index.html"><span class="brand-mark"><span></span><span></span><span></span></span><span>web<span class="brand-light">studio</span><small>WORDPRESS WORKSPACE</small></span></a><span>Izrada WordPress stranica na jednom mjestu.</span><a href="#">NA VRH ↑</a><small>© <span id="year"></span> WEB STUDIO</small></footer>
+</body></html>
