@@ -16,7 +16,7 @@ Osnovne kategorije automatski se stvaraju pri aktivaciji teme, ako već ne posto
 ## Instalacija i identitet
 
 1. Prenesite mapu `patriasoul-theme` u `wp-content/themes/` i aktivirajte temu.
-2. U **Izgled → Prilagodi → Identitet web-mjesta** postavite službeni PatriaSoul logo. Tema podržava WordPress prilagođeni logotip.
+2. U **Izgled → Prilagodi → Identitet web-mjesta** postavite službeni PatriaSoul logo. Tema podržava WordPress prilagođeni logotip i prikazuje postojeći službeni znak kao početnu rezervnu opciju.
 3. U **Izgled → Prilagodi → Zaglavna slika** možete postaviti naslovnu fotografiju.
 4. U **Izgled → Izbornici** izradite glavni izbornik i dodijelite ga lokaciji **Glavni izbornik**. Dok to ne učinite, tema prikazuje zadani izbornik.
 
