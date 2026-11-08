@@ -1,0 +1,96 @@
+name: Repository checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  inspect:
+    name: Inspect project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js when a Node project exists
+        if: hashFiles('package.json') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Node.js dependencies
+        if: hashFiles('package.json') != ''
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f npm-shrinkwrap.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Run available Node.js checks
+        if: hashFiles('package.json') != ''
+        run: |
+          node <<'NODE'
+          const pkg = require('./package.json');
+          const { spawnSync } = require('node:child_process');
+
+          for (const script of ['lint', 'test', 'build']) {
+            if (!pkg.scripts?.[script]) {
+              console.log(`Skipping ${script}: no "${script}" script is defined.`);
+              continue;
+            }
+
+            console.log(`Running npm run ${script}`);
+            const result = spawnSync('npm', ['run', script], {
+              stdio: 'inherit',
+              shell: process.platform === 'win32'
+            });
+
+            if (result.status !== 0) {
+              process.exit(result.status ?? 1);
+            }
+          }
+          NODE
+
+      - name: Set up PHP when PHP files exist
+        if: hashFiles('**/*.php') != ''
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: none
+          coverage: none
+
+      - name: Check PHP syntax
+        if: hashFiles('**/*.php') != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            php -l "$file"
+          done < <(find . -type f -name '*.php' \
+            -not -path './.git/*' \
+            -not -path './vendor/*' \
+            -not -path './node_modules/*' -print0)
+
+      - name: Report detected project files
+        shell: bash
+        run: |
+          echo "Repository inspection completed."
+          [ ! -f package.json ] || echo "Node.js project detected."
+          [ ! -f composer.json ] || echo "Composer project detected."
+          [ ! -d wp-content ] || echo "WordPress content directory detected."
+          if [ ! -f package.json ] && [ -z "$(find . -type f -name '*.php' -not -path './.git/*' -print -quit)" ]; then
+            echo "No Node.js or PHP project files yet; checks are ready for future additions."
+          fi
