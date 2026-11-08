@@ -1,11 +1,11 @@
-name: Package WordPress starter themes
+name: Package PatriaSoul WordPress theme
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - 'wordpress/themes/**'
+      - 'patriasoul-theme/**'
       - '.github/workflows/package-wordpress-themes.yml'
 
 permissions:
@@ -17,15 +17,25 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Package Blocksy child theme
+      - name: Validate and package theme
         run: |
+          set -euo pipefail
+          test -f patriasoul-theme/style.css
+          test -f patriasoul-theme/functions.php
+          php -l patriasoul-theme/functions.php
+          php -l patriasoul-theme/front-page.php
+          php -l patriasoul-theme/header.php
+          php -l patriasoul-theme/footer.php
+          php -l patriasoul-theme/index.php
+          php -l patriasoul-theme/single.php
+          php -l patriasoul-theme/page.php
           mkdir -p dist
-          cd wordpress/themes/web-studio-blocksy-starter
-          zip -r ../../../dist/web-studio-blocksy-starter.zip . -x '*.DS_Store' '*/.git/*'
-      - name: Upload theme ZIP
+          cd patriasoul-theme
+          zip -r ../dist/patriasoul-theme.zip . -x '*.DS_Store' '*/.git/*'
+      - name: Upload installable theme
         uses: actions/upload-artifact@v4
         with:
-          name: web-studio-blocksy-starter
-          path: dist/web-studio-blocksy-starter.zip
+          name: patriasoul-wordpress-theme
+          path: dist/patriasoul-theme.zip
           if-no-files-found: error
           retention-days: 30
