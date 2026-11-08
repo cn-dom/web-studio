@@ -1,5 +1,20 @@
 <footer class="site-footer">
-<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"><span class="brand-mark">P<span>✦</span></span><span><b>PATRIA<span>SOUL</span></b><small>ČUVARI NASLJEĐA</small></span></a>
-<p><?php esc_html_e( 'Hrvatska · povijest · znanje · identitet', 'patriasoul' ); ?></p>
-<small>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> PatriaSoul — <?php esc_html_e( 'Upoznaj Hrvatsku. Čuvaj baštinu. Prenesi priču.', 'patriasoul' ); ?></small>
-</footer><?php wp_footer(); ?></body></html>
+  <div class="footer-main">
+    <a class="brand brand-footer" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+      <?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
+        <span class="brand-mark" aria-hidden="true"><span class="brand-mark-inner">P</span><i>✦</i></span>
+        <span class="brand-wordmark"><b>PATRIA<span>SOUL</span></b><small>ČUVARI NASLJEĐA</small></span>
+      <?php endif; ?>
+    </a>
+    <p class="footer-motto">Hrvatska · povijest · znanje · identitet</p>
+    <nav class="footer-nav" aria-label="<?php esc_attr_e( 'Poveznice u podnožju', 'patriasoul' ); ?>">
+      <a href="<?php echo esc_url( home_url( '/o-portalu/' ) ); ?>">O portalu</a>
+      <a href="<?php echo esc_url( home_url( '/urednicka-nacela/' ) ); ?>">Urednička načela</a>
+      <a href="<?php echo esc_url( home_url( '/kontakt/' ) ); ?>">Kontakt</a>
+    </nav>
+  </div>
+  <div class="footer-bottom"><small>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> PatriaSoul — <?php esc_html_e( 'Upoznaj Hrvatsku. Čuvaj baštinu. Prenesi priču.', 'patriasoul' ); ?></small><span>VJERA · OBITELJ · DOMOVINA</span></div>
+</footer>
+<?php wp_footer(); ?>
+</body>
+</html>
