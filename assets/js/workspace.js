@@ -35,10 +35,10 @@
     const visible = projects.filter(p => (status === 'all' || p.status === status) && [p.name,p.client,p.type,p.notes].join(' ').toLocaleLowerCase('hr').includes(term));
     grid.innerHTML = visible.map(p => `<article class="project-card" data-id="${safe(p.id)}">
       <div class="project-card-top"><div class="project-type-icon">${safe(icons[p.type] || '▦')}</div><span class="project-status ${safe(p.status)}">${safe(statusLabels[p.status] || statusLabels.plan)}</span></div>
-      <h3>${safe(p.name)}</h3><div class="project-client">${safe(p.client || p.type)}</div>
+      <h3>${safe(p.name)}</h3><div class="project-client">${safe(p.client || p.type)}</div><div class="project-client">WordPress tema: ${safe(p.theme || "nije odabrana")}</div>
       ${p.notes ? `<p class="project-notes">${safe(p.notes)}</p>` : ''}
       <div class="project-card-meta"><span>＋ ${safe(p.type)}</span><span>◷ ${safe(dateLabel(p.updatedAt || p.createdAt))}</span></div>
-      <div class="project-card-actions"><a class="open-editor-link" href="editor.html?id=${safe(p.id)}">Otvori editor ↗</a><button type="button" data-action="edit" data-id="${safe(p.id)}">Uredi</button><button type="button" data-action="status" data-id="${safe(p.id)}">Promijeni status</button><button type="button" class="delete-project" data-action="delete" data-id="${safe(p.id)}">Obriši</button></div>
+      <div class="project-card-actions"><a class="open-editor-link" href="wordpress.html">WordPress biblioteka ↗</a><button type="button" data-action="edit" data-id="${safe(p.id)}">Uredi</button><button type="button" data-action="status" data-id="${safe(p.id)}">Promijeni status</button><button type="button" class="delete-project" data-action="delete" data-id="${safe(p.id)}">Obriši</button></div>
     </article>`).join('');
     empty.hidden = visible.length > 0;
     if (!projects.length) {
@@ -58,7 +58,7 @@
     if (project) {
       form.elements.name.value = project.name || '';
       form.elements.client.value = project.client || '';
-      form.elements.type.value = project.type || '';
+      form.elements.type.value = project.type || '';\n      form.elements.theme.value = project.theme || 'Blocksy';
       form.elements.status.value = project.status || 'plan';
       form.elements.notes.value = project.notes || '';
     }
@@ -85,7 +85,7 @@
     const now = new Date().toISOString();
     const editId = form.dataset.editId;
     const existing = projects.find(p => p.id === editId);
-    const project = {id: existing?.id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),name:String(data.get('name')).trim(),client:String(data.get('client')).trim(),type:String(data.get('type')),status:String(data.get('status') || 'plan'),notes:String(data.get('notes')).trim(),createdAt:existing?.createdAt || now,updatedAt:now};
+    const project = {id: existing?.id || (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),name:String(data.get('name')).trim(),client:String(data.get('client')).trim(),type:String(data.get('type')),theme:String(data.get('theme') || 'Blocksy'),status:String(data.get('status') || 'plan'),notes:String(data.get('notes')).trim(),createdAt:existing?.createdAt || now,updatedAt:now};
     if (existing) projects = projects.map(p => p.id === editId ? project : p);
     else projects.unshift(project);
     if (persist()) { closeModal(); render(); }
