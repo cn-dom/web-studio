@@ -11,18 +11,27 @@ Prilagođena WordPress tema za ozbiljan povijesno-domoljubni digitalni časopis 
 - Mediji
 - Na današnji dan
 
-## Instalacija
+Osnovne kategorije automatski se stvaraju pri aktivaciji teme, ako već ne postoje.
 
-Prenesite mapu `patriasoul-theme` u `wp-content/themes/`, zatim aktivirajte temu u WordPressu. U **Izgled → Prilagodi → Identitet web-mjesta** postavite službeni PatriaSoul logo. U **Izgled → Izbornici** izradite glavni izbornik i dodijelite ga lokaciji **Glavni izbornik**. Ako izbornik nije postavljen, tema prikazuje sigurni zadani izbornik.
+## Instalacija i identitet
+
+1. Prenesite mapu `patriasoul-theme` u `wp-content/themes/` i aktivirajte temu.
+2. U **Izgled → Prilagodi → Identitet web-mjesta** postavite službeni PatriaSoul logo. Tema podržava WordPress prilagođeni logotip.
+3. U **Izgled → Prilagodi → Zaglavna slika** možete postaviti naslovnu fotografiju.
+4. U **Izgled → Izbornici** izradite glavni izbornik i dodijelite ga lokaciji **Glavni izbornik**. Dok to ne učinite, tema prikazuje zadani izbornik.
 
 ## Objavljivanje sadržaja
 
-Koristite standardne WordPress objave i kategorije. Dodajte istaknutu sliku svakoj važnoj priči. Za odabir glavne priče koristi se kategorija/oznaka istaknutog sadržaja u sljedećoj nadogradnji; dok se ne doda urednički izbor, naslovnica automatski prikazuje najnoviju objavu. Objave u kategoriji `na-danasnji-dan` prikazuju se u bloku Na današnji dan.
+Koristite standardne WordPress objave i kategorije. Dodajte istaknutu sliku svakoj važnoj priči.
 
-## Pregled
+U uređivaču objave nalazi se okvir **PatriaSoul — uredničke oznake**:
+- Označite **Istaknuta priča na naslovnici** za odabir glavne priče.
+- Za rubriku **Na današnji dan** unesite datum u formatu `MM-DD` (npr. `11-18`) i dodijelite objavi kategoriju **Na današnji dan**. Naslovnica prikazuje zapis koji odgovara današnjem datumu.
 
-GitHub Pages prikazuje statički dizajnerski pregled iz korijenskog `index.html`. PHP predlošci, objave, kategorije i administracija rade tek nakon instalacije teme u stvarnom WordPressu.
+## Pregled i stvarna WordPress stranica
+
+GitHub Pages prikazuje statički dizajnerski pregled iz korijenskog `index.html`. PHP predlošci, objave, kategorije, uredničke oznake i administracija rade tek nakon instalacije teme u stvarnom WordPressu.
 
 ## Tehnologije
 
-WordPress PHP templates, CSS, vanilla JavaScript i GSAP/ScrollTrigger za nenametljive animacije. Tema poštuje postavku `prefers-reduced-motion`.
+WordPress PHP predlošci, CSS, vanilla JavaScript i GSAP/ScrollTrigger za nenametljive animacije. Tema poštuje postavku `prefers-reduced-motion`.
