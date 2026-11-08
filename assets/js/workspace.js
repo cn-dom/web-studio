@@ -38,7 +38,7 @@
       <h3>${safe(p.name)}</h3><div class="project-client">${safe(p.client || p.type)}</div>
       ${p.notes ? `<p class="project-notes">${safe(p.notes)}</p>` : ''}
       <div class="project-card-meta"><span>＋ ${safe(p.type)}</span><span>◷ ${safe(dateLabel(p.updatedAt || p.createdAt))}</span></div>
-      <div class="project-card-actions"><button type="button" data-action="edit" data-id="${safe(p.id)}">Uredi</button><button type="button" data-action="status" data-id="${safe(p.id)}">Promijeni status</button><button type="button" class="delete-project" data-action="delete" data-id="${safe(p.id)}">Obriši</button></div>
+      <div class="project-card-actions"><a class="open-editor-link" href="editor.html?id=${safe(p.id)}">Otvori editor ↗</a><button type="button" data-action="edit" data-id="${safe(p.id)}">Uredi</button><button type="button" data-action="status" data-id="${safe(p.id)}">Promijeni status</button><button type="button" class="delete-project" data-action="delete" data-id="${safe(p.id)}">Obriši</button></div>
     </article>`).join('');
     empty.hidden = visible.length > 0;
     if (!projects.length) {
