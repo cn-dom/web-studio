@@ -58,7 +58,8 @@
     if (project) {
       form.elements.name.value = project.name || '';
       form.elements.client.value = project.client || '';
-      form.elements.type.value = project.type || '';\n      form.elements.theme.value = project.theme || 'Blocksy';
+      form.elements.type.value = project.type || '';
+      form.elements.theme.value = project.theme || 'Blocksy';
       form.elements.status.value = project.status || 'plan';
       form.elements.notes.value = project.notes || '';
     }
