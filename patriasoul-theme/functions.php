@@ -13,6 +13,7 @@ function patriasoul_setup() {
     add_theme_support( 'responsive-embeds' );
     add_theme_support( 'align-wide' );
     add_theme_support( 'custom-logo', array( 'height' => 180, 'width' => 420, 'flex-height' => true, 'flex-width' => true ) );
+    add_theme_support( 'custom-header', array( 'width' => 1920, 'height' => 1080, 'flex-height' => true, 'flex-width' => true, 'header-text' => false ) );
     add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
     add_image_size( 'patriasoul-card', 760, 520, true );
     add_image_size( 'patriasoul-hero', 1920, 1080, true );
