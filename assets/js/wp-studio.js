@@ -15,7 +15,9 @@
  function setStatus(message,ready=false){status.textContent=message;statusWrap.classList.toggle('is-ready',ready);}
  function makeUrl(path='/wp-admin/'){
   const params=new URLSearchParams({
-   mode:'browser-full-screen',
+   mode:'seamless',
+   storage:'browser',
+   'site-slug':'web-studio-personal',
    php:'8.4',
    wp:'latest',
    url:path,
