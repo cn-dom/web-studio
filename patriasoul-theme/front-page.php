@@ -11,7 +11,7 @@ if ( ! $featured_query->have_posts() ) {
     $featured_query = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => 1, 'post_status' => 'publish' ) );
 }
 $featured_post = $featured_query->have_posts() ? $featured_query->posts[0] : null;
-$today_query = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => 1, 'post_status' => 'publish', 'category_name' => 'na-danasnji-dan' ) );
+$today_query = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => 1, 'post_status' => 'publish', 'category_name' => 'na-danasnji-dan', 'meta_key' => '_patriasoul_day_month', 'meta_value' => wp_date( 'm-d' ) ) );
 ?>
 <main id="main-content">
 <section class="hero">
