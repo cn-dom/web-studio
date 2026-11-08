@@ -15,7 +15,7 @@ $today_query = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => 1
 ?>
 <main id="main-content">
 <section class="hero">
-  <div class="hero-image" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div><div class="hero-ornament" aria-hidden="true"></div>
+  <div class="hero-image" aria-hidden="true" style="<?php if ( get_header_image() ) { echo '--hero-photo:url(' . esc_url( get_header_image() ) . ');'; } ?>"></div><div class="hero-shade" aria-hidden="true"></div><div class="hero-ornament" aria-hidden="true"></div>
   <div class="hero-content">
     <div class="eyebrow"><i></i> VJERA · OBITELJ · DOMOVINA</div>
     <h1>Hrvatska.<br><em>Povijest.</em><br>Znanje. Identitet.</h1>
