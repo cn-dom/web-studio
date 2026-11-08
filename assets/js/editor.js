@@ -55,6 +55,51 @@
  $('#preview-desktop').addEventListener('click',()=>setMode('desktop'));$('#preview-mobile').addEventListener('click',()=>setMode('mobile'));
  function exportHTML(){const html='<!doctype html><html lang="hr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+safe(siteSettings.siteName||projectName)+'</title><style>*{box-sizing:border-box}body{margin:0;font-family:'+safe(siteSettings.font||'DM Sans')+',Arial,sans-serif}.site-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 7vw;background:#fff;color:#1d2b29;border-bottom:1px solid #ddd}.site-header img{max-width:160px;max-height:46px;object-fit:contain}.site-header nav{display:flex;gap:18px;flex-wrap:wrap}.site-header a{font-size:13px;color:inherit;text-decoration:none}.section{padding:70px max(24px,8vw)}h1,h2{font-size:clamp(30px,5vw,58px);line-height:1.1;margin:15px 0}p{max-width:650px;line-height:1.8;white-space:pre-line}.eyebrow{font-size:11px;letter-spacing:2px}.btn{display:inline-block;margin-top:15px;padding:12px 18px;background:#172c28;color:white;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px}.grid>*{padding:22px;border:1px solid currentColor}.photos img,.inline-media img{width:100%;height:220px;object-fit:cover}.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.inline-media{display:flex;gap:16px;flex-wrap:wrap;margin-top:22px}.inline-media img{max-width:360px;border-radius:8px}@media(max-width:600px){.section{padding:48px 24px}.grid{grid-template-columns:1fr}}</style></head><body><header class="site-header"><div>'+(siteSettings.logo?'<img src="'+siteSettings.logo+'" alt="'+safe(siteSettings.siteName||projectName)+'">':'')+'<strong>'+safe(siteSettings.siteName||projectName)+'</strong></div><nav>'+siteSettings.nav.filter(n=>n.label&&n.url).map(n=>'<a href="'+safe(safeUrl(n.url))+'">'+safe(n.label)+'</a>').join('')+'</nav></header>'+sections.map(s=>'<section class="section" '+'id="'+(s.type==='contact'?'kontakt':s.type==='about'?'o-nama':s.type==='services'?'usluge':s.type==='gallery'?'galerija':'')+'" style="background:'+safe(s.bg)+';color:'+safe(s.fg)+'">'+(s.eyebrow?'<div class="eyebrow">'+safe(s.eyebrow)+'</div>':'')+'<h2>'+safe(s.title).replace(/\n/g,'<br>')+'</h2>'+(s.text?'<p>'+safe(s.text)+'</p>':'')+(s.images&&s.images.length?'<div class="'+(s.type==='gallery'?'grid photos':'inline-media')+'">'+s.images.map(im=>'<img src="'+im.src+'" alt="'+safe(im.alt||s.imageAlt||'')+'">').join('')+'</div>':'')+(s.type==='services'?'<div class="grid"><div>Usluga 01</div><div>Usluga 02</div><div>Usluga 03</div></div>':'')+(s.type==='gallery'&&(!s.images||!s.images.length)?'<div class="grid"><div>Fotografija 1</div><div>Fotografija 2</div><div>Fotografija 3</div></div>':'')+(s.button?'<a class="btn" href="'+safe(safeUrl(s.buttonUrl||'#kontakt'))+'">'+safe(s.button)+'</a>':'')+'</section>').join('')+'</body></html>';
  const blob=new Blob([html],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=(projectName.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'web-stranica')+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('HTML stranica s fotografijama je izvezena.');}
+
+ function importHTMLFile(file){
+  if(!file)return;
+  if(file.size>5*1024*1024){notify('HTML datoteka mora biti manja od 5 MB.');return;}
+  const reader=new FileReader();
+  reader.onerror=()=>notify('Datoteku nije moguće pročitati.');
+  reader.onload=()=>{
+   try{
+    const doc=new DOMParser().parseFromString(String(reader.result||''),'text/html');
+    const root=doc.querySelector('main')||doc.body;
+    let nodes=[...root.querySelectorAll('section')];
+    if(!nodes.length)nodes=[...root.children].filter(el=>['SECTION','ARTICLE','HEADER','FOOTER','DIV'].includes(el.tagName)&&el.innerText.trim());
+    if(!nodes.length)nodes=[root];
+    nodes=nodes.filter(el=>el.innerText.trim()).slice(0,20);
+    const imported=nodes.map((el,index)=>{
+     const raw=(el.id+' '+el.className+' '+el.innerText).toLowerCase();
+     let type='about';
+     if(index===0||['hero','banner','intro','cover','naslovna','welcome'].some(x=>raw.includes(x)))type='hero';
+     else if(['footer','podnožje'].some(x=>raw.includes(x)))type='footer';
+     else if(['contact','kontakt','reach us'].some(x=>raw.includes(x)))type='contact';
+     else if(['gallery','galerija','portfolio','works','projects'].some(x=>raw.includes(x)))type='gallery';
+     else if(['service','usluge','what we do'].some(x=>raw.includes(x)))type='services';
+     else if(['testimonial','review','iskustva','recenz'].some(x=>raw.includes(x)))type='testimonials';
+     const heading=el.querySelector('h1,h2,h3,h4');
+     const paragraphs=[...el.querySelectorAll('p')].slice(0,3).map(p=>p.innerText.trim()).filter(Boolean);
+     const small=el.querySelector('small,.eyebrow,.eyeline,.subtitle');
+     const cta=el.querySelector('a[href],button');
+     const inline=el.getAttribute('style')||'';
+     const bg=inline.match(new RegExp('background(?:-color)?\\\\s*:\\\\s*(#[0-9a-f]{3,8})','i'));
+     const fg=inline.match(new RegExp('(?:^|;)\\\\s*color\\\\s*:\\\\s*(#[0-9a-f]{3,8})','i'));
+     const images=[...el.querySelectorAll('img[src]')].slice(0,6).map(img=>({src:img.getAttribute('src'),alt:img.getAttribute('alt')||''})).filter(img=>img.src&&(img.src.startsWith('https://')||img.src.startsWith('http://')));
+     return {id:crypto.randomUUID(),type,...defaults[type],eyebrow:small?small.innerText.trim().slice(0,80):'',title:heading?heading.innerText.trim().slice(0,180):(el.querySelector('strong')?.innerText.trim().slice(0,180)||('Uvezeni sadržaj '+(index+1))),text:paragraphs.join('\\n\\n').slice(0,700),button:cta?cta.innerText.trim().slice(0,50):'',buttonUrl:cta?safeUrl(cta.getAttribute('href')||''):'',bg:bg?bg[1]:defaults[type].bg,fg:fg?fg[1]:defaults[type].fg,images,imageAlt:images[0]?.alt||''};
+    });
+    if(!imported.length){notify('U HTML datoteci nisu pronađene čitljive sekcije.');return;}
+    if(!confirm('Uvesti '+imported.length+' sekcija iz '+file.name+'? Postojeće sekcije ovog projekta bit će zamijenjene.'))return;
+    sections=imported;selected=sections[0].id;
+    const title=doc.querySelector('title')?.innerText.trim();
+    if(title&&!siteSettings.siteName){siteSettings.siteName=title.slice(0,80);saveSettings();}
+    render();select(selected);scheduleSave();notify('Uvezeno '+imported.length+' sekcija. Provjeri raspored i sadržaj.');
+   }catch(error){console.error(error);notify('Uvoz nije uspio. Provjeri je li datoteka valjani HTML.');}
+  };
+  reader.readAsText(file);
+ }
+ $('#import-html').addEventListener('click',()=>$('#import-html-file').click());
+ $('#import-html-file').addEventListener('change',e=>{importHTMLFile(e.target.files[0]);e.target.value='';});
  $('#export-html').addEventListener('click',exportHTML);
  try{const projects=JSON.parse(localStorage.getItem(PROJECTS)||'[]'),p=projects.find(x=>x.id===projectId);if(p){projectName=p.name;$('#project-name').textContent=p.name;}else if(projectId){$('#project-name').textContent='Projekt nije pronađen';notify('Projekt nije pronađen u ovom pregledniku.');}}catch{}
  loadSettings();sections=load();render();if(sections.length)select(sections[0].id);if(!projectId)$('#save-state').textContent='Demo način rada';else persist();
