@@ -1,0 +1,31 @@
+name: Package WordPress starter themes
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'wordpress/themes/**'
+      - '.github/workflows/package-wordpress-themes.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Package Blocksy child theme
+        run: |
+          mkdir -p dist
+          cd wordpress/themes/web-studio-blocksy-starter
+          zip -r ../../../dist/web-studio-blocksy-starter.zip . -x '*.DS_Store' '*/.git/*'
+      - name: Upload theme ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-studio-blocksy-starter
+          path: dist/web-studio-blocksy-starter.zip
+          if-no-files-found: error
+          retention-days: 30
