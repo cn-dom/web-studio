@@ -10,39 +10,64 @@
   stone:'https://raw.githubusercontent.com/cn-dom/web-studio/main/wordpress/blueprints/blocksy-kamenoklesarstvo.json',
   apartments:'https://raw.githubusercontent.com/cn-dom/web-studio/main/wordpress/blueprints/blocksy-apartmani.json'
  };
- let client=null,starting=false;
  const labels={business:'Poslovna web stranica',stone:'Kamenoklesarstvo',apartments:'Apartmani i turizam',blank:'Novi WordPress projekt'};
+ let activeSlug=null, loadTimer=null, launched=false;
  function setStatus(message,ready=false){status.textContent=message;statusWrap.classList.toggle('is-ready',ready);}
+ function makeUrl(path='/wp-admin/'){
+  const params=new URLSearchParams({mode:'seamless',storage:'browser','site-slug':activeSlug,language:'hr',php:'8.4',wp:'latest',url:path});
+  if(blueprints[choice.value])params.set('blueprint-url',blueprints[choice.value]);
+  return 'https://playground.wordpress.net/?'+params.toString();
+ }
+ function showLoad(message){
+  loading.innerHTML='<span class="loader"></span><b>'+message+'</b><small>WordPress se pokreće unutar ovog prozora. Prvo pokretanje može potrajati.</small>';
+  loading.classList.remove('is-hidden');
+ }
+ function navigate(path,button){
+  if(!launched||!activeSlug)return;
+  document.querySelectorAll('[data-go]').forEach(item=>item.classList.toggle('active',item===button));
+  showLoad('Otvaramo WordPress…');
+  setStatus('Učitavanje WordPress stranice…');
+  frame.src=makeUrl(path);
+ }
+ frame.addEventListener('load',()=>{
+  if(!launched)return;
+  clearTimeout(loadTimer);
+  loading.classList.add('is-hidden');
+  setStatus('WordPress Playground je učitan',true);
+  $('#site-mode').textContent='WORDPRESS U PREGLEDNIKU';
+ });
+ frame.addEventListener('error',()=>{
+  clearTimeout(loadTimer);
+  setStatus('Greška pri učitavanju WordPressa');
+  showLoad('WordPress se nije uspio učitati.');
+ });
  async function launch(){
-  if(starting)return;
-  starting=true;start.disabled=true;start.textContent='Pokretanje…';workspace.hidden=false;workspace.scrollIntoView({behavior:'smooth',block:'start'});
-  loading.classList.remove('is-hidden');setStatus('Učitavanje WordPress okruženja…');$('#site-name').textContent=labels[choice.value];
-  try{
-   const {startPlaygroundWeb}=await import('https://playground.wordpress.net/client/index.js');
-   let blueprint;
-   if(blueprints[choice.value]){
-    const response=await fetch(blueprints[choice.value],{cache:'no-store'});
-    if(!response.ok)throw new Error('Nije moguće učitati odabrani početni paket.');
-    blueprint=await response.json();
-   }else{
-    blueprint={landingPage:'/',login:true,preferredVersions:{php:'8.4',wp:'latest'},steps:[{step:'setSiteLanguage',language:'hr'}]};
+  if(launched)return;
+  start.disabled=true;start.textContent='Pokretanje…';
+  workspace.hidden=false;workspace.scrollIntoView({behavior:'smooth',block:'start'});
+  const selected=choice.value;
+  activeSlug='web-studio-'+selected+'-'+Date.now().toString(36);
+  $('#site-name').textContent=labels[selected];
+  showLoad('Pokrećemo WordPress…');
+  setStatus('Povezivanje s WordPress Playgroundom…');
+  $('#site-mode').textContent='POKRETANJE';
+  launched=true;
+  frame.src=makeUrl('/wp-admin/');
+  loadTimer=setTimeout(()=>{
+   if(!loading.classList.contains('is-hidden')){
+    setStatus('WordPress se još učitava');
+    loading.innerHTML='<b>Učitavanje traje dulje nego očekivano.</b><small>Provjeri internetsku vezu ili pokušaj ponovno. Ako se ovo ponavlja, pošalji mi snimku zaslona.</small><button class="button button-primary" id="retry-wordpress">Pokušaj ponovno</button>';
+    $('#retry-wordpress')?.addEventListener('click',()=>{launched=false;frame.src='about:blank';launch();});
    }
-   client=await startPlaygroundWeb({iframe:frame,remoteUrl:'https://playground.wordpress.net/remote.html',blueprint});
-   await client.isReady();
-   setStatus('WordPress je spreman',true);
-   loading.classList.add('is-hidden');
-   $('#site-mode').textContent='POKRENUTO U PREGLEDNIKU';
-   document.querySelectorAll('[data-go]').forEach(button=>button.addEventListener('click',async()=>{
-    document.querySelectorAll('[data-go]').forEach(item=>item.classList.toggle('active',item===button));
-    try{await client.goTo(button.dataset.go);}catch(error){setStatus('Navigacija nije uspjela: '+error.message);}
-   }));
-  }catch(error){
-   loading.innerHTML='<b>WordPress se nije uspio pokrenuti.</b><small>'+String(error.message||error)+'</small><button class="button button-primary" id="retry-wordpress">Pokušaj ponovno</button>';
-   $('#retry-wordpress')?.addEventListener('click',()=>{loading.innerHTML='<span class="loader"></span><b>Pokrećemo WordPress…</b><small>Preuzimamo WordPress, temu i početni sadržaj.</small>';launch();});
-   setStatus('Greška pri pokretanju');
-  }finally{starting=false;start.disabled=false;start.textContent='＋ Pokreni WordPress projekt';}
+  },120000);
+  start.disabled=false;start.textContent='＋ Pokreni WordPress projekt';
  }
  start?.addEventListener('click',launch);
- $('#restart-wordpress')?.addEventListener('click',()=>{if(client&&!confirm('Pokrenuti novi projekt? Trenutni radni prostor može biti izgubljen ako nije izvezen.'))return;client=null;frame.src='about:blank';workspace.hidden=true;setStatus('WordPress okruženje nije pokrenuto');window.scrollTo({top:0,behavior:'smooth'});});
+ document.querySelectorAll('[data-go]').forEach(button=>button.addEventListener('click',()=>navigate(button.dataset.go,button)));
+ $('#restart-wordpress')?.addEventListener('click',()=>{
+  if(!confirm('Pokrenuti novi WordPress projekt? Trenutni projekt ostaje spremljen u pohrani preglednika ako je spremanje podržano.'))return;
+  launched=false;clearTimeout(loadTimer);frame.src='about:blank';workspace.hidden=true;activeSlug=null;
+  setStatus('WordPress okruženje nije pokrenuto');window.scrollTo({top:0,behavior:'smooth'});
+ });
  const year=$('#year');if(year)year.textContent=new Date().getFullYear();
 })();
