@@ -12,10 +12,10 @@ Cilj je izgraditi ponovljiv i siguran proces: od ideje i dogovora s klijentom, p
 - Prije predaje provjeriti prikaz na mobitelu, performanse, pristupačnost, sigurnost i osnovni SEO.
 - Ne vezati klijentske stranice uz jedan hosting ili pružatelja usluga.
 
-## WordPress teme i početni dizajni
+## Ugrađeni WordPress Studio\n- `wp-studio.html` pokreće WordPress Playground unutar Web Studija, bez otvaranja zasebnog editora.\n- Korisnik može pokrenuti poslovni, kamenoklesarski, turistički ili prazni WordPress projekt i uređivati ga u ugrađenoj WordPress nadzornoj ploči.\n- Playground je pregledničko radno okruženje; trajni izvoz, sigurnosne kopije i objava na hostingu zasebni su sljedeći koraci.\n\n## WordPress teme i početni dizajni
 - Početni katalog: Blocksy, Astra, Kadence, GeneratePress, Neve i Twenty Twenty-Five.
 - Besplatna tema ne znači da su svi njezini Starter Sites predlošci besplatni. Svaki dizajn treba provjeriti zasebno.
-- Web Studio na GitHub Pagesu je statičan katalog; WordPress se pokreće u WordPress Studio ili na hostingu.
+- Web Studio je statična aplikacija, a ugrađeni WordPress Playground pokreće PHP i WordPress u pregledniku.
 - Upute za radni tijek: [docs/WORDPRESS-WORKFLOW.md](docs/WORDPRESS-WORKFLOW.md).
 
 ## Blocksy početni paket
