@@ -1,10 +1,8 @@
 <footer class="site-footer">
   <div class="footer-main">
-    <a class="brand brand-footer" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-      <?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
-        <img class="brand-default-logo" src="https://raw.githubusercontent.com/cn-dom/cuvari-nasljeda/main/public/assets/images/1000000982.png" alt="PatriaSoul – Čuvari nasljeđa" width="56" height="56" loading="lazy">
-      <?php endif; ?>
-    </a>
+    <?php if ( has_custom_logo() ) : ?><div class="brand brand-footer brand-custom"><?php the_custom_logo(); ?></div><?php else : ?>
+    <a class="brand brand-footer" href="<?php echo esc_url( home_url( '/' ) ); ?>"><img class="brand-default-logo" src="https://raw.githubusercontent.com/cn-dom/cuvari-nasljeda/main/public/assets/images/1000000982.png" alt="PatriaSoul – Čuvari nasljeđa" width="56" height="56" loading="lazy"></a>
+    <?php endif; ?>
     <p class="footer-motto">Hrvatska · povijest · znanje · identitet</p>
     <nav class="footer-nav" aria-label="<?php esc_attr_e( 'Poveznice u podnožju', 'patriasoul' ); ?>">
       <a href="<?php echo esc_url( home_url( '/o-portalu/' ) ); ?>">O portalu</a>
