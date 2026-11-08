@@ -3,6 +3,8 @@
  const choice=$('#blueprint-choice'), start=$('#start-wordpress'), frame=$('#wordpress-frame');
  const status=$('#runtime-status'), statusWrap=$('.studio-status'), loading=$('#frame-loading');
  const workspace=$('#wordpress-workspace');
+ const queryTemplate=new URLSearchParams(window.location.search).get('template');
+ if(queryTemplate&&['business','stone','apartments','blank'].includes(queryTemplate))choice.value=queryTemplate;
  const blueprints={
   business:'https://raw.githubusercontent.com/cn-dom/web-studio/main/wordpress/blueprints/blocksy-poslovna-stranica.json',
   stone:'https://raw.githubusercontent.com/cn-dom/web-studio/main/wordpress/blueprints/blocksy-kamenoklesarstvo.json',
