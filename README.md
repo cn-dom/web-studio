@@ -1,6 +1,6 @@
 # Web Studio
 
-**Web Studio** je radni prostor za izradu profesionalnih web stranica za klijente, prvenstveno na WordPress platformi.
+**Web Studio** je radni prostor isključivo za planiranje i izradu pravih WordPress web stranica za klijente. Katalog besplatnih WordPress tema i početnih predložaka nalazi se na [WordPress biblioteci](wordpress.html).
 
 Cilj je izgraditi ponovljiv i siguran proces: od ideje i dogovora s klijentom, preko dizajna i izrade, do testiranja, predaje i kasnijeg održavanja web stranice.
 
@@ -11,6 +11,12 @@ Cilj je izgraditi ponovljiv i siguran proces: od ideje i dogovora s klijentom, p
 - Svaku web stranicu klijenta držati kao zaseban, prenosiv WordPress projekt.
 - Prije predaje provjeriti prikaz na mobitelu, performanse, pristupačnost, sigurnost i osnovni SEO.
 - Ne vezati klijentske stranice uz jedan hosting ili pružatelja usluga.
+
+## WordPress teme i početni dizajni
+- Početni katalog: Blocksy, Astra, Kadence, GeneratePress, Neve i Twenty Twenty-Five.
+- Besplatna tema ne znači da su svi njezini Starter Sites predlošci besplatni. Svaki dizajn treba provjeriti zasebno.
+- Web Studio na GitHub Pagesu je statičan katalog; WordPress se pokreće u WordPress Studio ili na hostingu.
+- Upute za radni tijek: [docs/WORDPRESS-WORKFLOW.md](docs/WORDPRESS-WORKFLOW.md).
 
 ## Planirane cjeline
 | Cjelina | Svrha |
