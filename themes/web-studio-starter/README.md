@@ -6,6 +6,7 @@ Početna WordPress blok-tema za izradu modernih prezentacijskih web stranica.
 - Uređivanje zaglavlja, navigacije, podnožja i sadržaja kroz WordPress Site Editor.
 - Naslovnica s hero sekcijom, pozivima na akciju, uslugama i završnim CTA blokom.
 - Predlošci za stranice, objave, arhive, popis objava i 404.
+- Biblioteka Gutenberg obrazaca: hero sekcija, tri kartice usluga i završni poziv na kontakt.
 - Responzivna osnova, prilagodljivi tipografski i koloristički tokeni.
 - Podrška za postavku smanjenog kretanja radi pristupačnosti.
 
