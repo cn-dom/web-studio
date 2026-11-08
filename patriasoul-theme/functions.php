@@ -51,6 +51,52 @@ function patriasoul_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'patriasoul_assets' );
 
+/** Add small editorial controls to standard WordPress posts. */
+function patriasoul_add_editorial_meta_box() {
+    add_meta_box(
+        'patriasoul_editorial_details',
+        __( 'PatriaSoul — uredničke oznake', 'patriasoul' ),
+        'patriasoul_render_editorial_meta_box',
+        'post',
+        'side',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'patriasoul_add_editorial_meta_box' );
+
+function patriasoul_render_editorial_meta_box( $post ) {
+    wp_nonce_field( 'patriasoul_save_editorial_details', 'patriasoul_editorial_nonce' );
+    $featured = get_post_meta( $post->ID, '_patriasoul_featured', true );
+    $day_month = get_post_meta( $post->ID, '_patriasoul_day_month', true );
+    ?>
+    <p><label><input type="checkbox" name="patriasoul_featured" value="1" <?php checked( $featured, '1' ); ?>> <?php esc_html_e( 'Istaknuta priča na naslovnici', 'patriasoul' ); ?></label></p>
+    <hr>
+    <p><label for="patriasoul_day_month"><strong><?php esc_html_e( 'Na današnji dan (MM-DD)', 'patriasoul' ); ?></strong></label></p>
+    <p><input type="text" id="patriasoul_day_month" name="patriasoul_day_month" value="<?php echo esc_attr( $day_month ); ?>" placeholder="npr. 11-18" pattern="(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])" class="widefat"></p>
+    <p class="description"><?php esc_html_e( 'Unesi mjesec i dan. Objavu dodaj i u kategoriju „Na današnji dan”.', 'patriasoul' ); ?></p>
+    <?php
+}
+
+function patriasoul_save_editorial_details( $post_id ) {
+    if ( ! isset( $_POST['patriasoul_editorial_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['patriasoul_editorial_nonce'] ) ), 'patriasoul_save_editorial_details' ) ) {
+        return;
+    }
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return; }
+    if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
+    if ( isset( $_POST['patriasoul_featured'] ) && '1' === $_POST['patriasoul_featured'] ) {
+        update_post_meta( $post_id, '_patriasoul_featured', '1' );
+    } else {
+        delete_post_meta( $post_id, '_patriasoul_featured' );
+    }
+    $day_month = isset( $_POST['patriasoul_day_month'] ) ? sanitize_text_field( wp_unslash( $_POST['patriasoul_day_month'] ) ) : '';
+    if ( preg_match( '/^(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/', $day_month ) ) {
+        update_post_meta( $post_id, '_patriasoul_day_month', $day_month );
+    } else {
+        delete_post_meta( $post_id, '_patriasoul_day_month' );
+    }
+}
+add_action( 'save_post_post', 'patriasoul_save_editorial_details' );
+
 function patriasoul_excerpt_length( $length ) { return 26; }
 add_filter( 'excerpt_length', 'patriasoul_excerpt_length' );
 
