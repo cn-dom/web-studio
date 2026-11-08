@@ -17,7 +17,6 @@
   const params=new URLSearchParams({
    mode:'seamless',
    storage:'browser',
-   'site-slug':'web-studio-personal',
    php:'8.4',
    wp:'latest',
    url:path,
@@ -63,7 +62,7 @@
   start.disabled=true;start.textContent='Pokretanje…';
   workspace.hidden=false;workspace.scrollIntoView({behavior:'smooth',block:'start'});
   const selected=choice.value;
-  activeSlug='web-studio-'+selected;
+  activeSlug=null;
   $('#site-name').textContent=labels[selected];
   showLoad('Pokrećemo WordPress…','Učitavamo službeno WordPress Playground okruženje.');
   setStatus('Povezivanje s WordPress Playgroundom…');
