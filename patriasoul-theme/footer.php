@@ -2,8 +2,7 @@
   <div class="footer-main">
     <a class="brand brand-footer" href="<?php echo esc_url( home_url( '/' ) ); ?>">
       <?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
-        <span class="brand-mark" aria-hidden="true"><span class="brand-mark-inner">P</span><i>✦</i></span>
-        <span class="brand-wordmark"><b>PATRIA<span>SOUL</span></b><small>ČUVARI NASLJEĐA</small></span>
+        <img class="brand-default-logo" src="https://raw.githubusercontent.com/cn-dom/cuvari-nasljeda/main/public/assets/images/1000000982.png" alt="PatriaSoul – Čuvari nasljeđa" width="56" height="56" loading="lazy">
       <?php endif; ?>
     </a>
     <p class="footer-motto">Hrvatska · povijest · znanje · identitet</p>
