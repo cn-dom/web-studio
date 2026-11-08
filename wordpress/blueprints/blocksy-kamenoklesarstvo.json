@@ -1,0 +1,56 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "login": true,
+  "preferredVersions": {
+    "php": "8.4",
+    "wp": "latest"
+  },
+  "siteOptions": {
+    "blogname": "Kamenoklesarstvo",
+    "blogdescription": "OBRT · KAMEN · KVALITETA",
+    "permalink_structure": "/%postname%/"
+  },
+  "steps": [
+    {
+      "step": "setSiteLanguage",
+      "language": "hr"
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "wordpress.org/themes",
+        "slug": "blocksy"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
+        "slug": "blocksy-companion"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "git:directory",
+        "url": "https://github.com/cn-dom/web-studio.git",
+        "ref": "main",
+        "path": "wordpress/themes/web-studio-blocksy-starter"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php\nrequire_once '/wordpress/wp-load.php';\n$pages = array(array('slug'=>'pocetna','title'=>'Početna','content'=>'<!-- wp:group {\"align\":\"full\",\"className\":\"ws-pattern ws-hero\",\"style\":{\"color\":{\"background\":\"#263344\",\"text\":\"#ffffff\"},\"spacing\":{\"padding\":{\"top\":\"88px\",\"bottom\":\"88px\",\"left\":\"6vw\",\"right\":\"6vw\"}}},\"layout\":{\"type\":\"constrained\"}} --><div class=\"wp-block-group alignfull ws-pattern ws-hero has-text-color has-background\" style=\"color:#ffffff;background-color:#263344;padding:88px 6vw\"><!-- wp:paragraph --><p class=\"ws-kicker\">OBRT · KAMEN · KVALITETA</p><!-- /wp:paragraph --><!-- wp:heading {\"level\":1} --><h1 class=\"wp-block-heading\">Precizna izrada. Kvaliteta koja traje.</h1><!-- /wp:heading --><!-- wp:paragraph --><p>Predstavite svoje radove, vrste kamena, obradu i usluge. Pokažite kako od ideje nastaje kvalitetno izveden projekt.</p><!-- /wp:paragraph --><!-- wp:buttons --><div class=\"wp-block-buttons\"><!-- wp:button --><div class=\"wp-block-button\"><a class=\"wp-block-button__link wp-element-button\" href=\"/kontakt/\">Pošaljite upit</a></div><!-- /wp:button --></div><!-- /wp:buttons --></div><!-- /wp:group -->'),\narray('slug'=>'usluge','title'=>'Usluge','content'=>'<!-- wp:heading --><h2 class=\"wp-block-heading\">Kamenoklesarske usluge</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Predstavite samo usluge koje stvarno nudite: izradu spomenika, obradu kamena, obloge, klupice ili druge radove.</p><!-- /wp:paragraph --><!-- wp:columns --><div class=\"wp-block-columns\"><!-- wp:column --><div class=\"wp-block-column\"><!-- wp:heading {\"level\":3} --><h3 class=\"wp-block-heading\">Prva usluga</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Opišite što nudite i kome je usluga namijenjena.</p><!-- /wp:paragraph --></div><!-- /wp:column --><!-- wp:column --><div class=\"wp-block-column\"><!-- wp:heading {\"level\":3} --><h3 class=\"wp-block-heading\">Druga usluga</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Objasnite način rada i glavne prednosti.</p><!-- /wp:paragraph --></div><!-- /wp:column --><!-- wp:column --><div class=\"wp-block-column\"><!-- wp:heading {\"level\":3} --><h3 class=\"wp-block-heading\">Treća usluga</h3><!-- /wp:heading --><!-- wp:paragraph --><p>Dodajte još jednu važnu uslugu ili kategoriju.</p><!-- /wp:paragraph --></div><!-- /wp:column --></div><!-- /wp:columns -->'),\narray('slug'=>'o-nama','title'=>'O nama','content'=>'<!-- wp:heading --><h2 class=\"wp-block-heading\">O nama</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Opišite svoj obrt, iskustvo, radionicu, materijale i područje na kojem radite. Dodajte vlastite fotografije stvarnih radova.</p><!-- /wp:paragraph -->'),\narray('slug'=>'kontakt','title'=>'Kontakt','content'=>'<!-- wp:heading --><h2 class=\"wp-block-heading\">Kontaktirajte nas</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Ovdje unesite stvarni telefon, e-mail, adresu i kontakt obrazac.</p><!-- /wp:paragraph -->'));\n$ids = array();\nforeach ($pages as $page) {\n    $existing = get_page_by_path($page['slug'], OBJECT, 'page');\n    $postarr = array('ID'=>$existing ? $existing->ID : 0,'post_type'=>'page','post_status'=>'publish','post_title'=>$page['title'],'post_name'=>$page['slug'],'post_content'=>$page['content'],'post_author'=>1);\n    $id = wp_insert_post($postarr, true);\n    if (is_wp_error($id)) { throw new RuntimeException($id->get_error_message()); }\n    $ids[$page['slug']] = $id;\n}\nupdate_option('show_on_front','page');\nupdate_option('page_on_front',$ids['pocetna']);\nupdate_option('page_for_posts',0);\n"
+    }
+  ]
+}

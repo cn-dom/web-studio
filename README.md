@@ -18,6 +18,13 @@ Cilj je izgraditi ponovljiv i siguran proces: od ideje i dogovora s klijentom, p
 - Web Studio na GitHub Pagesu je statičan katalog; WordPress se pokreće u WordPress Studio ili na hostingu.
 - Upute za radni tijek: [docs/WORDPRESS-WORKFLOW.md](docs/WORDPRESS-WORKFLOW.md).
 
+## Blocksy početni paket
+- Vlastita besplatna child tema nalazi se u `wordpress/themes/web-studio-blocksy-starter/`.
+- Tri WordPress Studio Blueprinta: poslovna stranica, kamenoklesarstvo i apartmani.
+- Osam originalnih Gutenberg uzoraka: tri hero dizajna i pet sekcija.
+- Paket ne sadrži Blocksy temu, premium dodatke, tuđe demo sadržaje ni stock fotografije.
+- Upute: [Blocksy početni paket](wordpress/themes/web-studio-blocksy-starter/README.md).
+
 ## Planirane cjeline
 | Cjelina | Svrha |
 |---|---|

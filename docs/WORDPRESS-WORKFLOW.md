@@ -36,3 +36,24 @@ Web Studio se objavljuje kao statična GitHub Pages aplikacija. Ona može prikaz
 - Ne unositi pristupne podatke klijenata u Web Studio ili Git.
 - Svaki klijentski projekt držati u zasebnoj WordPress instalaciji ili jasno izoliranom okruženju.
 - Prije uvoza na postojeću stranicu napraviti sigurnosnu kopiju.
+
+
+## Web Studio Blocksy Starter
+
+U repozitoriju je vlastita child tema s originalnim Gutenberg uzorcima. Ne redistribuira Blocksy ni tuđe demo stranice.
+
+- Tema: [wordpress/themes/web-studio-blocksy-starter](../wordpress/themes/web-studio-blocksy-starter/README.md)
+- Blueprint poslovna stranica: [blocksy-poslovna-stranica.json](../wordpress/blueprints/blocksy-poslovna-stranica.json)
+- Blueprint kamenoklesarstvo: [blocksy-kamenoklesarstvo.json](../wordpress/blueprints/blocksy-kamenoklesarstvo.json)
+- Blueprint apartmani: [blocksy-apartmani.json](../wordpress/blueprints/blocksy-apartmani.json)
+
+### Pokretanje Blueprinta u WordPress Studio
+
+1. Preuzmi jedan JSON Blueprint iz repozitorija.
+2. U WordPress Studio odaberi **Add site → Upload**.
+3. Odaberi JSON datoteku i pokreni izradu nove lokalne stranice.
+4. Blueprint instalira besplatnu Blocksy temu, Blocksy Companion i Web Studio child temu.
+5. Kreira početne stranice: Početna, Usluge, O nama i Kontakt.
+6. Uređuj sadržaj u WordPressu. Zamijeni ogledne tekstove, podatke i fotografije stvarnim podacima klijenta.
+
+Blueprinti dohvaćaju temu iz WordPress.org, a Web Studio child temu iz ovog GitHub repozitorija. Za ovu prvu verziju koristi ih za **nove lokalne projekte**, ne za postojeće produkcijske stranice. Prije stvarnog klijentskog projekta treba potvrditi uspješan uvoz u instaliranoj verziji WordPress Studio i provjeriti sve stranice nakon uvoza.
