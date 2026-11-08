@@ -57,3 +57,10 @@ U repozitoriju je vlastita child tema s originalnim Gutenberg uzorcima. Ne redis
 6. Uređuj sadržaj u WordPressu. Zamijeni ogledne tekstove, podatke i fotografije stvarnim podacima klijenta.
 
 Blueprinti dohvaćaju temu iz WordPress.org, a Web Studio child temu iz ovog GitHub repozitorija. Za ovu prvu verziju koristi ih za **nove lokalne projekte**, ne za postojeće produkcijske stranice. Prije stvarnog klijentskog projekta treba potvrditi uspješan uvoz u instaliranoj verziji WordPress Studio i provjeriti sve stranice nakon uvoza.
+
+
+## Ugrađeni WordPress Studio
+
+Web Studio sadrži `wp-studio.html`, koji učitava WordPress Playground JavaScript client u iframe i pokreće WordPress unutar aplikacije. Korisnik odabire jedan od Blueprinta iz `wordpress/blueprints/` ili praznu instalaciju. Nakon pokretanja može se prebacivati između javnog prikaza i `/wp-admin/` bez napuštanja Web Studija.
+
+Ovo je pregledničko razvojno okruženje, a ne produkcijski hosting. Trajno spremanje, izvoz cijele instalacije, sigurnosne kopije i objava na klijentskoj domeni moraju biti zasebno implementirani i testirani prije produkcijske upotrebe.
