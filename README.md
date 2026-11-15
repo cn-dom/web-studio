@@ -23,6 +23,12 @@ Projekt za izradu vlastitog sustava temeljenog na WordPressu: moderna tema, blok
 - Ne tvrdimo da je sustav multi-tenant ili produkcijski siguran dok to ne potvrde testovi izolacije i sigurnosti.
 - Svaka promjena mora biti testirana prije objave.
 
+## Sljedeća dokumentacija
+
+- `docs/USER-ACCESS-AND-AUTH.md` — arhitektura prijave, korisničkih računa i ovlasti
+- `docs/INSTALLATION-PLAN.md` — redoslijed lokalne instalacije i kriteriji prihvaćanja
+- `config/plugin-manifest.json` — popis kandidata i status odabira dodataka
+
 ## Struktura
 
 - `docs/` — plan, katalog komponenti, licenciranje, autentifikacija i testiranje
@@ -34,4 +40,4 @@ Projekt za izradu vlastitog sustava temeljenog na WordPressu: moderna tema, blok
 
 ## Status
 
-Početna faza: inventar i arhitektura korisničkog pristupa su pripremljeni, a početni dodatak je dodan. WordPress instalacija, testiranje dodatka, 2FA, potvrda e-maila i demonstracijska stranica još nisu dovršeni.
+Početna faza: inventar, arhitektura korisničkog pristupa, instalacijski plan i manifest dodataka su pripremljeni. Početni dodatak je razvojni temelj. WordPress instalacija, lokalno testiranje dodatka, odabir/instalacija dodataka, 2FA, potvrda e-maila i demonstracijska stranica još nisu dovršeni.
