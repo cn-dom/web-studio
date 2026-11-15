@@ -59,3 +59,15 @@ Za svaku komponentu evidentirati:
 8. rezultat instalacijskog i funkcionalnog testa.
 
 Statusi: `istražiti`, `odobreno`, `testirati`, `odbijeno`, `instalirano`.
+
+## Prijava, korisnički računi i portal
+
+| Komponenta | Namjena | Početna odluka |
+|---|---|---|
+| WordPress Core Authentication | Prijava, odjava, sesije, reset lozinke | Koristiti izvorni sustav; ne stvarati vlastitu pohranu lozinki |
+| Web Studio Core (vlastiti dodatak) | Uloga klijenta i početni portal | Uključeno u repozitorij; razvojna osnova, testirati prije produkcije |
+| Two-factor authentication | Dodatna zaštita administratora i po potrebi klijenata | Odabrati jedan održavan dodatak nakon provjere kompatibilnosti i besplatnih mogućnosti |
+| Login rate limiting / bot protection | Zaštita od automatiziranih pokušaja prijave | Uključiti kroz odabrani sigurnosni dodatak ili hosting; ne duplicirati zaštitu |
+| E-mail verification | Potvrda adrese prije aktivacije javnog računa | Obvezno prije otvaranja javne registracije |
+
+Detaljna arhitektura, granice odgovornosti i kriteriji prihvaćanja nalaze se u [USER-ACCESS-AND-AUTH.md](USER-ACCESS-AND-AUTH.md).
