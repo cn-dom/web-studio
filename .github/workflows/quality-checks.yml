@@ -1,0 +1,56 @@
+name: Quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php-and-json:
+    name: PHP syntax and JSON validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Lint PHP files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -d '' php_files < <(find plugins theme -type f -name '*.php' -print0 2>/dev/null || true)
+          if [ "${#php_files[@]}" -eq 0 ]; then
+            echo "No PHP files found in plugins/ or theme/ yet."
+            exit 0
+          fi
+          for file in "${php_files[@]}"; do
+            php -l "$file"
+          done
+
+      - name: Validate JSON files
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          files = sorted(Path(".").rglob("*.json"))
+          files = [p for p in files if ".git" not in p.parts]
+          if not files:
+              print("No JSON files found.")
+          for path in files:
+              with path.open(encoding="utf-8") as handle:
+                  json.load(handle)
+              print(f"Valid JSON: {path}")
+          PY
