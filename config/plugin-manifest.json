@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "project": "web-studio",
+  "policy": {
+    "installOnlyAfterReview": true,
+    "preferOfficialWordPressDirectory": true,
+    "onePluginPerCapability": true,
+    "publicRegistrationEnabledByDefault": false,
+    "secretsInRepository": false
+  },
+  "components": [
+    {
+      "id": "wordpress-core",
+      "name": "WordPress Core",
+      "category": "cms",
+      "source": "https://wordpress.org/download/",
+      "status": "required",
+      "decision": "Use the official WordPress distribution through WordPress Studio."
+    },
+    {
+      "id": "wordpress-studio",
+      "name": "WordPress Studio",
+      "category": "local-development",
+      "source": "https://wordpress.studio/",
+      "status": "approved-for-local-development",
+      "decision": "Primary local development environment on Windows; not production hosting."
+    },
+    {
+      "id": "web-studio-core",
+      "name": "Web Studio Core",
+      "category": "custom-plugin",
+      "source": "plugins/web-studio-core/",
+      "status": "needs-local-testing",
+      "decision": "Own plugin for minimal client role and portal. Does not replace WordPress authentication."
+    },
+    {
+      "id": "wordfence",
+      "name": "Wordfence Security",
+      "category": "security-login-2fa",
+      "source": "https://wordpress.org/plugins/wordfence/",
+      "status": "candidate",
+      "freeTier": "Free plugin with optional paid upgrades; verify exact free features during installation.",
+      "decision": "Evaluate as the single security plugin for firewall, login protection and administrator 2FA. Do not add a second plugin for the same functions without a documented need."
+    },
+    {
+      "id": "updraftplus",
+      "name": "UpdraftPlus",
+      "category": "backup",
+      "source": "https://wordpress.org/plugins/updraftplus/",
+      "status": "candidate",
+      "freeTier": "Verify backup destinations, restore workflow and any size/feature limits.",
+      "decision": "Evaluate for scheduled backups and tested restore."
+    },
+    {
+      "id": "the-seo-framework",
+      "name": "The SEO Framework",
+      "category": "seo",
+      "source": "https://wordpress.org/plugins/autodescription/",
+      "status": "candidate",
+      "freeTier": "Verify current free functionality and compatibility.",
+      "decision": "Preferred lightweight SEO candidate; compare before selecting."
+    },
+    {
+      "id": "forminator",
+      "name": "Forminator",
+      "category": "forms",
+      "source": "https://wordpress.org/plugins/forminator/",
+      "status": "candidate",
+      "freeTier": "Verify current form, anti-spam, export and notification limits.",
+      "decision": "Evaluate for contact and request forms; choose only one forms plugin."
+    },
+    {
+      "id": "fluent-smtp",
+      "name": "FluentSMTP",
+      "category": "email-delivery",
+      "source": "https://wordpress.org/plugins/fluent-smtp/",
+      "status": "candidate",
+      "freeTier": "Plugin is not an email provider; SMTP/API credentials and provider terms are separate.",
+      "decision": "Evaluate for reliable transactional email delivery. Never commit credentials."
+    },
+    {
+      "id": "polylang",
+      "name": "Polylang",
+      "category": "multilingual",
+      "source": "https://wordpress.org/plugins/polylang/",
+      "status": "optional-candidate",
+      "freeTier": "Verify free language and translation workflow limits.",
+      "decision": "Install only if the demo requires multiple languages."
+    },
+    {
+      "id": "woocommerce",
+      "name": "WooCommerce",
+      "category": "ecommerce",
+      "source": "https://wordpress.org/plugins/woocommerce/",
+      "status": "optional-candidate",
+      "freeTier": "Core plugin is free; payment gateways, extensions and payment processing may have separate costs.",
+      "decision": "Do not install in the base build unless the demo site needs a store."
+    },
+    {
+      "id": "litespeed-cache",
+      "name": "LiteSpeed Cache",
+      "category": "performance",
+      "source": "https://wordpress.org/plugins/litespeed-cache/",
+      "status": "conditional-candidate",
+      "freeTier": "Plugin includes features that depend on LiteSpeed server infrastructure; verify hosting compatibility.",
+      "decision": "Do not install until production hosting is selected; avoid overlapping cache/optimization plugins."
+    }
+  ]
+}
