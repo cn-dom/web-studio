@@ -23,6 +23,10 @@ Projekt za izradu vlastitog sustava temeljenog na WordPressu: moderna tema, blok
 - Ne tvrdimo da je sustav multi-tenant ili produkcijski siguran dok to ne potvrde testovi izolacije i sigurnosti.
 - Svaka promjena mora biti testirana prije objave.
 
+## Kontrola kvalitete
+
+GitHub Actions automatski provjerava PHP sintaksu i JSON datoteke. Detalji i uvjeti prije produkcijskog izdanja nalaze se u `docs/QUALITY-CHECKS.md`. Sigurnosna pravila prijave ranjivosti nalaze se u `SECURITY.md`.
+
 ## Sljedeća dokumentacija
 
 - `docs/USER-ACCESS-AND-AUTH.md` — arhitektura prijave, korisničkih računa i ovlasti
